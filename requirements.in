@@ -1,0 +1,7 @@
+# Handling dependencies:
+# pip install -r requirements.in
+# pip freeze --all > requirements.txt 
+pandas
+seaborn
+ipykernel
+scikit-learn
