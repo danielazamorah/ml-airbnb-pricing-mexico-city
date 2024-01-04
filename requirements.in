@@ -5,3 +5,5 @@ pandas
 seaborn
 ipykernel
 scikit-learn
+folium
+tensorflow    
