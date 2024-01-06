@@ -6,4 +6,5 @@ seaborn
 ipykernel
 scikit-learn
 folium
-tensorflow    
+tensorflow   
+keras_tuner 
