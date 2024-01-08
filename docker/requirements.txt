@@ -1,0 +1,7 @@
+# Data Science
+pandas==2.1.4
+tensorflow==2.15.0
+
+# Deployment
+Flask==3.0.0
+gunicorn==21.2.0

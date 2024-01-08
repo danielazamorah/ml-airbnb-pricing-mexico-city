@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  flask-app:
+    image: tf-airbnb-pricing-mx:v_20240107184239
+
+  streamlit-app:
+    image: streamlit-app-airbnb-pricing-mx:latest
+    ports:
+      - "8501:8501"
+    depends_on:
+      - flask-app
