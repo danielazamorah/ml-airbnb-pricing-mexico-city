@@ -1,10 +1,21 @@
 # Handling dependencies:
 # pip install -r requirements.in
 # pip freeze --all > requirements.txt 
+
+# Data Science
 pandas
 seaborn
-ipykernel
 scikit-learn
-folium
 tensorflow   
+shap
+
+# Dev environment
+folium
+ipykernel
 keras_tuner 
+ipywidgets
+
+# Deployment
+Flask
+gunicorn
+streamlit
