@@ -1,6 +1,9 @@
 # Machine Learning for Airbnb Pricing in Mexico City! 
 
-In this project, we create and deploy a TensorFlow Machine Learning model for pricing recommendations on Mexico City's new Airbnb listings!
+In this project, we create and deploy a **TensorFlow Machine Learning model** for pricing recommendations on Mexico City's new Airbnb listings! We deployed the model to a [Vertex AI endpoint](https://cloud.google.com/vertex-ai/docs/model-registry/import-model) and then deployed a Streamlit app that calls that endpoint to display pricing predictions.
+
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://ml-airbnb-pricing-mexico-city.streamlit.app)
+
 
 ## Inspiration story
 
@@ -14,13 +17,9 @@ You can check the map with the nearest listings as you can see below (but that's
 
 <img src="assets/images/out_new_area_prices.png">
 
-Airbnb does mention that to determine prices they use listings that are similar to yours, considering criteria like location, listing type, rooms, amenities, reviews, ratings, etc.
-
-So, I decided to use some Airbnb data from Mexico City available on the site [*Inside Airbnb*](http://insideairbnb.com/get-the-data/) (specifically, the dataset corresponding to Mexico City on the quarter June 27th-Sept 22nd, 2023) and train a model where we use `host` and `unit` information to predict a price. **The main objective will be obtaining the predicted price and explaining which factors were the ones influencing the most that specific prediction.**
+Airbnb does mention that to determine prices they use listings that are similar to yours, considering criteria like location, listing type, rooms, amenities, reviews, ratings, etc. So, I decided to use some Airbnb data from Mexico City available on the site [*Inside Airbnb*](http://insideairbnb.com/get-the-data/) (specifically, the dataset corresponding to Mexico City on the quarter June 27th-Sept 22nd, 2023) and train a model where we use `host` and `unit` information to predict a price. **The main objective will be to have the ability to experiment with different listing factors to see how this affects price predictions🧪.**
 
 > ⚡️ This project was done as the final delivery for the [DataTalksClub ML Zoomcamp](https://github.com/DataTalksClub/machine-learning-zoomcamp). I've been completing the course while trying to use in parallel Google Cloud Machine Learning offerings [see the repository: https://github.com/datasciencedani/ml-zoomcamp-gcp].
-
-> 💡 Cool idea on further iterations: **use also images** of the listings as determinants for the price.
 
 ## Result 
 
@@ -57,7 +56,8 @@ To run the files in this project (notebooks, training script, and deployment) yo
 
 ### 1️⃣ Data Cleaning, Exploratory Data Analysis (EDA) & Training — Notebooks
 
-The first thing we did in this project was analyze the data we were using for the rest of our work, clean it, and then perform the necessary exploration to understand how pricing in Mexico City's Airbnb listings work, what are the features that describe a host and its units, and how these features affect the offered price. After having an idea of which features would be important to predict the price, we explored the use of  
+The first thing we did in this project was analyze the data we were using for the rest of our work, clean it, and then perform the necessary exploration to understand how pricing in Mexico City's Airbnb listings work, what are the features that describe a host and its units, and how these features affect the offered price. After having an idea of which features would be important to predict the price, we explored the use of different models and selected the best one for our problem.
+
 
 You will find  can run the notebooks where we prepare our data for modeling:
 
@@ -69,7 +69,7 @@ You will find  can run the notebooks where we prepare our data for modeling:
 
 ### 2️⃣ Training — Script
 
-> **Note:** The ML Zoomcamp is a peer to peer evaluation program, for the sake of reproducibility, we followed the practice of having a training script (as shown in the course) and creating a docker image for model predictions. The appropiate approach if working with Google Cloud services would be operationilizing training with a [Vertex pipeline](https://codelabs.developers.google.com/vertex-pipelines-intro#5) instead of a script (with a component to read and clean the data, a component for training with a Vertex custom training job, and a components for model deployment (usinng Vertex AI model registry and endpoints)). For these steps you need to setup a cloud environment, reason for which we will leave it out of this specific project (But stay tuned if you would like to learn more about this!). 
+> **Note:** The ML Zoomcamp is a peer-to-peer evaluation program, for the sake of reproducibility, we followed the practice of having a training script (as shown in the course) and creating a docker image for model predictions. The appropriate approach if working with Google Cloud services would be operationalizing training with a [Vertex pipeline](https://codelabs.developers.google.com/vertex-pipelines-intro#5) instead of a script (with a component to read and clean the data, a component for training with a Vertex custom training job, and a components for model deployment (using Vertex AI model registry and endpoints)). For these steps, you need to set up a cloud environment, the reason for which we will leave it out of this specific project (But stay tuned if you would like to learn more about this!). 
 
 Run the [Training Script](scripts/train.py) by running in terminal:
 
@@ -90,7 +90,7 @@ In the [Feature Importance NB](nbs/03_feature_importance.ipynb) we explore the u
 
 We also dive into the limitation of using **SHAP values** to give recommendations to users. For example, if the SHAP variable of a specific amenity is negative and you don't have that amenity, then would including it increase the price? And if you have another amenity, with a lower negative SHAP value, will including it increase the price, but on a lower scale? As you will observe in the notebook, this is not always the case, there are many things we need to consider when interpreting model explanations. SHAP values are valuable to understanding the outputs of our models, but there are still many **complexities in how we use these model interpretations**.
 
-> ‼️ **Disclaimer:** when staring this project we thought xAI (Explainable AI) and the use of it was going to be more straightforward, but in the process we noticed the complexities and still lack of research/implementations around this topic (more while working with models as NNs). We will keep the work done on this project as is, but we aim to keep researching on the best ways to interpret and take advantage of model explanation techniques in the future.
+> 🚨 **Note:** when staring this project we thought xAI (Explainable AI) and the use of it was going to be more straightforward, but in the process we noticed the complexities and still lack of research/implementations around this topic (more while working with models as NNs). We will keep the work done on this project as is, but we aim to keep researching on the best ways to interpret and take advantage of model explanation techniques in the future.
 
 ### 4️⃣ Deployment & Containerization (run predictions)
 
@@ -132,16 +132,42 @@ make shutdown
 
 There are two aspects of the deployment of this service that we need to take into account:
 
-1. The cloud deployment of the trained machine learning model (scope of the ML Zoomcamp Capstone project).
+1. The cloud deployment of the trained machine learning model.
 2. The deployment of the Streamlit application.
 
-For the first part, kindly read the [Cloud Model Deployment NB](nbs/04_cloud_deployment.ipynb) where we leverage the tools offered in ML platforms like Vertex AI, to easily register and deploy our Machine Learning model to an online endpoint to make predictions.
+For the first part, kindly read the [Cloud Model Deployment NB](nbs/04_cloud_deployment.ipynb) where we leverage the tools offered in ML platforms like Vertex AI, to easily register the model, use it for batch predictions, and deploy it to an online endpoint.
 
-![](assets/images/batch_predictions.png)
+- Batch predictions:
+    ![](assets/images/batch_predictions.png)
 
-For the second part, of deploying our Streamli app, there are many solutions we could implement. But our architecture recommendation, if you're building an application using Google Cloud Services, would be to use Cloud Run (Google Cloud Container Deployment Service), just modifying the app file to communicate directly to the already deployed model (on our online endpoint) as we already have an image to containerize our service [check out [How to deploy your Streamlit Web App to Google Cloud Run](https://medium.com/@faizififita1/how-to-deploy-your-streamlit-web-app-to-google-cloud-run-ba776487c5fe) for detailed instructions]. 
+- Online Endpoint call:
+    ![](assets/images/endpoint_call.png)
 
-> **Important Note:** In the real buisness world Streamlit is only used for proof of concepts and tests with a small group of users. It is important to decouple the Machine Learning model from any kind of application that uses it. The Vertex AI platform (as many others similar to it, ex. AWS Sagemaker) is a great place to centralize your machine learning project artifacts (such as models, datasets, metrics, prediction results, and endpoints), also providing a centraized location for the services to ease your work when working with ML. As you could observe, I was able to deploy an online endpoint (with autoscaling, trafic percentage, endpoint monitoring, etc) without dealing with app engines or kubernetes. That's why we say this platforms offer "managed" services that ease our lives when working with ML.
+For the second part, of deploying our Streamlit app, we used the public Streamlit Cloud, using app and requirements files from the `streamlit/` directory (see [instructions](https://docs.streamlit.io/streamlit-community-cloud/deploy-your-app)). In order to be able to access the Vertex endpoint from the external app, we added the following text to the Streamlit secrets in "Advanced Settings" (see instructions to obtain this Service Account credentials in the previously referenced [Cloud Model Deployment NB](nbs/04_cloud_deployment.ipynb)):
+
+```toml
+[gcp_service_account]
+type = "service_account"
+project_id = "xxx"
+private_key_id = "xxx"
+private_key = "xxx"
+client_email = "xxx"
+client_id = "xxx"
+auth_uri = "https://accounts.google.com/o/oauth2/auth"
+token_uri = "https://oauth2.googleapis.com/token"
+auth_provider_x509_cert_url = "https://www.googleapis.com/oauth2/v1/certs"
+client_x509_cert_url = "xxx"
+```
+> **Note 1️⃣ :** In the real business world, Streamlit is only used for proof of concepts and tests with a small group of users. 
+
+> **Note 2️⃣ :** It is important to decouple the Machine Learning model from any kind of application that uses it. This way, managing the model you use is independet from the application. The Vertex AI platform (as many others similar to it, ex. AWS Sagemaker) is a great place to centralize your machine learning project artifacts (such as models, datasets, metrics, prediction results, and endpoints), also providing a centralized location for the services to ease your work when working with ML. As you can observe, I was able to deploy an online endpoint (with autoscaling, traffic percentage, endpoint monitoring, etc) without dealing with app engines or Kubernetes. That's why we say these platforms offer "managed" services that ease our lives when working with ML.
+
+## Possible next steps
+
+1. Create a Vertex AI pipeline to operationalize training, automatically registering trained models, and deploying with possible performance conditions.
+
+2. **💡 Cool idea:** use also images of the listings as determinants for the price.
+
 
 ## Inspiration Projects
 
