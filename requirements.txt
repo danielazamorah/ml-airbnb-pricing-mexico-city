@@ -9,9 +9,10 @@ shap==0.44.0
 folium==0.15.1
 ipykernel==6.27.1
 keras-tuner==1.4.6
-ipywidgets
+ipywidgets==8.1.1
 
 # Deployment
 Flask==3.0.0
 gunicorn==21.2.0
 streamlit==1.29.0
+google-cloud-aiplatform==1.39.0
