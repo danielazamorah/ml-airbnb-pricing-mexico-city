@@ -35,8 +35,8 @@ bathroom_type = st.selectbox("Bathroom Type", ['bath', 'private_bath', 'shared_b
 beds = st.number_input("Beds", min_value=0)
 
 st.subheader("Location")
-latitude = st.number_input("Latitude",step=.001,format="%.5f")
-longitude = st.number_input("Longitude",step=.001,format="%.5f")
+latitude = st.number_input("Latitude",step=.001,format="%.5f", value=19.4326)
+longitude = st.number_input("Longitude",step=.001,format="%.5f", value=99.1332)
 neighbourhood = st.selectbox("Neighbourhood", ['azcapotzalco','benito_juarez','coyoacan','cuajimalpa_de_morelos', 'cuauhtemoc', 'gustavo_a._madero', 'iztacalco', 'iztapalapa', 'la_magdalena_contreras', 'miguel_hidalgo', 'milpa_alta', 'tlahuac', 'tlalpan',  'venustiano_carranza', 'xochimilco', 'alvaro_obregon'])  # Add all options
 
 st.subheader("Description")
