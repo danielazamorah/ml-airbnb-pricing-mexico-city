@@ -176,21 +176,21 @@ if st.button("Predict Price"):
 
     # ------------------------------------------------------------------
     # ----------------------------------------- Send request to endpoint:
-    try:
-        credentials = service_account.Credentials.from_service_account_info(
-            st.secrets["gcp_service_account"]
-        )
+    #try:
+    credentials = service_account.Credentials.from_service_account_info(
+        st.secrets["gcp_service_account"]
+    )
 
-        endpoint_id = '161753553608638464'
-        project="532579765435"
-        location="us-central1"
+    endpoint_id = '161753553608638464'
+    project="532579765435"
+    location="us-central1"
 
-        endpoint_name = f'projects/{project}/locations/{location}/endpoints/{endpoint_id}'
-        endpoint = aiplatform.Endpoint(endpoint_name=endpoint_name, credentials=credentials)
+    endpoint_name = f'projects/{project}/locations/{location}/endpoints/{endpoint_id}'
+    endpoint = aiplatform.Endpoint(endpoint_name=endpoint_name, credentials=credentials)
 
-        price_unit = np.exp(endpoint.predict(instances=[test_features_ordered.values[0].astype(np.float32).tolist()]).predictions[0][0])
+    price_unit = np.exp(endpoint.predict(instances=[test_features_ordered.values[0].astype(np.float32).tolist()]).predictions[0][0])
 
-        st.write("Predicted Price: $%.2f MXN/night"%price_unit)
-        st.write("Try adding amenities or changing other variables to see how it affects the price!")
-    except ValueError:
-        st.error('Please provide all the charactherisics of the Airbnb host/unit. If you have, then there is an error with endpoint connection. Please try again later.')
+    st.write("Predicted Price: $%.2f MXN/night"%price_unit)
+    st.write("Try adding amenities or changing other variables to see how it affects the price!")
+    #except ValueError:
+    #    st.error('Please provide all the charactherisics of the Airbnb host/unit. If you have, then there is an error with endpoint connection. Please try again later.')
