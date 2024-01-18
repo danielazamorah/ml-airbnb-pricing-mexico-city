@@ -181,8 +181,8 @@ if st.button("Predict Price"):
         st.secrets["gcp_service_account"]
     )
 
-    endpoint_id = '161753553608638464'
-    project="532579765435"
+    endpoint_id = '3224482775197286400'
+    project="860047570819"
     location="us-central1"
 
     endpoint_name = f'projects/{project}/locations/{location}/endpoints/{endpoint_id}'
